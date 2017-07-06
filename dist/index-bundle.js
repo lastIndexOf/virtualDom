@@ -76,6 +76,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+exports.default = El;
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Element = function () {
@@ -88,16 +90,51 @@ var Element = function () {
   }
 
   _createClass(Element, [{
-    key: 'render',
+    key: "render",
     value: function render() {
-      return console.log('hello, world');
+      var root = document.createElement(this.tagName);
+
+      var props = this.props;
+      for (var prop in props) {
+        root.setAttribute(prop, props[prop]);
+      }
+
+      var children = this.children || [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var child = _step.value;
+
+          if (child instanceof Element) root.appendChild(child.render());else root.appendChild(document.createTextNode(child));
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return root;
     }
   }]);
 
   return Element;
 }();
 
-exports.default = Element;
+function El() {
+  return new (Function.prototype.bind.apply(Element, [null].concat(Array.prototype.slice.call(arguments))))();
+}
 
 /***/ }),
 /* 1 */
@@ -112,10 +149,9 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var el = new _index2.default('ul', { id: 'ul' }, 'hello, world');
+var el = (0, _index2.default)('ul', { id: 'test-ul' }, [(0, _index2.default)('li', { class: 'test-li' }, ['li-1']), (0, _index2.default)('li', { class: 'test-li' }, ['li-2']), (0, _index2.default)('li', { class: 'test-li' }, ['li-3'])]);
 
-console.log(el);
-el.render();
+document.querySelector('#app').appendChild(el.render());
 
 /***/ })
 /******/ ]);
