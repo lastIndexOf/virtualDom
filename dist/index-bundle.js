@@ -84,19 +84,19 @@ var Element = function () {
   function Element(tagName, props, children) {
     _classCallCheck(this, Element);
 
-    this.tagName = tagName;
-    this.props = props;
-    this.children = children;
+    this.tagName = tagName; // 该节点的标签类型
+    this.props = props; // 该节点的属性, { class: 'class1 class2' }
+    this.children = children; // 该节点的子节点
   }
 
   _createClass(Element, [{
     key: "render",
     value: function render() {
-      var root = document.createElement(this.tagName);
+      var root = document.createElement(this.tagName); // 创建dom节点
 
       var props = this.props;
       for (var prop in props) {
-        root.setAttribute(prop, props[prop]);
+        root.setAttribute(prop, props[prop]); // 设置dom节点属性
       }
 
       var children = this.children || [];
@@ -108,7 +108,8 @@ var Element = function () {
         for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var child = _step.value;
 
-          if (child instanceof Element) root.appendChild(child.render());else root.appendChild(document.createTextNode(child));
+          if (child instanceof Element) root.appendChild(child.render()); // 添加子节点
+          else root.appendChild(document.createTextNode(child)); // 添加文本节点
         }
       } catch (err) {
         _didIteratorError = true;
@@ -131,6 +132,24 @@ var Element = function () {
 
   return Element;
 }();
+
+/**
+*
+*  diff算法的实现
+*
+*/
+
+
+var diff = exports.diff = function diff(oldTree, newTree) {};
+
+/**
+*
+*  深度优先遍历树
+*
+*/
+var dfsWalk = exports.dfsWalk = function dfsWalk(oldTree) {};
+
+var diffChild = exports.diffChild = function diffChild() {};
 
 function El() {
   return new (Function.prototype.bind.apply(Element, [null].concat(Array.prototype.slice.call(arguments))))();

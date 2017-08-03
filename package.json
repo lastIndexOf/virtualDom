@@ -7,6 +7,7 @@
     "build": "webpack"
   },
   "dependencies": {
+    "requirejs": "^2.3.4",
     "webpack": "^3.0.0"
   },
   "devDependencies": {
